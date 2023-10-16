@@ -9,12 +9,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import selenium_framework.pageobjects.LandingPage;
 
 public class BaseTest {
 	public WebDriver driver;
+	protected LandingPage landingPage;
 	public WebDriver initializeDriver() throws IOException {
 		
 		Properties prop = new Properties();
@@ -39,12 +42,17 @@ public class BaseTest {
 		return driver;
 	}
 	
+	@BeforeMethod(alwaysRun=true)
 	public LandingPage launchApplication() throws IOException {
 		WebDriver driver = initializeDriver();
-		LandingPage landingPage = new LandingPage(driver);
+		landingPage = new LandingPage(driver);
 		landingPage.goTo();
 		
 		return landingPage;
-		
+	}
+	
+	@AfterMethod(alwaysRun=true)
+	public void tearDown() {
+		driver.close();
 	}
 }
