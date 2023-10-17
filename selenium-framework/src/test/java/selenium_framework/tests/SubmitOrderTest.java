@@ -49,20 +49,6 @@ public class SubmitOrderTest extends BaseTest{
 			};
 	}
 	
-	
-	public String getScreenshot(String testCaseName) {
-		TakesScreenshot ts = (TakesScreenshot)driver;
-		File source = ts.getScreenshotAs(OutputType.FILE);
-		File dest = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-		try {
-			FileUtils.copyFile(source, dest);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
-	}
-	
 	// to verify if zara coat 3 is displaying on orders page
 	// depends on submitOrder test
 	@Test(dependsOnMethods= {"submitOrder"})	

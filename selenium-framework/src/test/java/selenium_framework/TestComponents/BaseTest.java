@@ -1,10 +1,14 @@
 package selenium_framework.TestComponents;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -54,5 +58,18 @@ public class BaseTest {
 	@AfterMethod(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
+	}
+	
+	public String getScreenshot(String testCaseName, WebDriver driver) {
+		TakesScreenshot ts = (TakesScreenshot)driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File dest = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+		try {
+			FileUtils.copyFile(source, dest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
 	}
 }

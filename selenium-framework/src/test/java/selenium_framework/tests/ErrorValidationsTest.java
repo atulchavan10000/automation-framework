@@ -23,6 +23,6 @@ public class ErrorValidationsTest extends BaseTest{
 		ProductCatalogue productCatalogue = landingPage.loginToApp("atulchavan@gmail.com", "Google123$");
 		productCatalogue.addProductToCart(productName);
 		CartPage cartPage = productCatalogue.goToCartPage();
-		Assert.assertFalse(cartPage.verifyProductDisplayedInCart("ZARA COAT 33"));
+		Assert.assertTrue(cartPage.verifyProductDisplayedInCart("ZARA COAT 33"));
 	}
 }
