@@ -9,10 +9,14 @@ import selenium_framework.pageobjects.OrdersPage;
 import selenium_framework.pageobjects.ProductCatalogue;
 import selenium_framework.utils.DataReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -45,6 +49,19 @@ public class SubmitOrderTest extends BaseTest{
 			};
 	}
 	
+	
+	public String getScreenshot(String testCaseName) {
+		TakesScreenshot ts = (TakesScreenshot)driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File dest = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+		try {
+			FileUtils.copyFile(source, dest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
+	}
 	
 	// to verify if zara coat 3 is displaying on orders page
 	// depends on submitOrder test
