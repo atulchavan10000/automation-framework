@@ -4,27 +4,18 @@ import selenium_framework.TestComponents.BaseTest;
 import selenium_framework.pageobjects.CartPage;
 import selenium_framework.pageobjects.CheckoutPage;
 import selenium_framework.pageobjects.ConfirmationPage;
-import selenium_framework.pageobjects.LandingPage;
 import selenium_framework.pageobjects.OrdersPage;
 import selenium_framework.pageobjects.ProductCatalogue;
-import selenium_framework.utils.DataReader;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 public class SubmitOrderTest extends BaseTest{
 	
 	String productName = "ZARA COAT 3";
 	
-	@Test(dataProvider = "getData", groups= {"Purchase"})
+	@Test(dataProvider = "getDataForSubmitOrder", dataProviderClass = DataProviderFactory.class, groups= {"Purchase"})
 	public void submitOrder(HashMap<String, String> input) throws IOException {
 		ProductCatalogue productCatalogue = landingPage.loginToApp(input.get("userEmail"), input.get("userPass"));
 		
@@ -40,14 +31,6 @@ public class SubmitOrderTest extends BaseTest{
 	    Assert.assertTrue(confirmationPage.getConfirmationMessage().equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 	}
 	
-	@DataProvider
-	public Object[][] getData() {
-		List<HashMap<String, String>> data = DataReader.getJsonDataToMap("PurchaseOrder.json");
-		return new Object[][] {
-			{data.get(0)},
-			{data.get(1)}
-			};
-	}
 	
 	// to verify if zara coat 3 is displaying on orders page
 	// depends on submitOrder test
